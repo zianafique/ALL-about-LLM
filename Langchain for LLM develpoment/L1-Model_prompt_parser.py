@@ -2,10 +2,10 @@
 # coding: utf-8
 
 # # LangChain: Models, Prompts and Output Parsers
-# 
-# 
+#
+#
 # ## Outline
-# 
+#
 #  * Direct API calls to OpenAI
 #  * API calls through LangChain:
 #    * Prompts
@@ -13,8 +13,6 @@
 #    * Output parsers
 
 # ## Get your [OpenAI API Key](https://platform.openai.com/account/api-keys)
-
-# In[ ]:
 
 
 #!pip install python-dotenv
@@ -28,8 +26,9 @@ import os
 import openai
 
 from dotenv import load_dotenv, find_dotenv
-_ = load_dotenv(find_dotenv()) # read local .env file
-openai.api_key = os.environ['OPENAI_API_KEY']
+
+_ = load_dotenv(find_dotenv())  # read local .env file
+openai.api_key = os.environ["OPENAI_API_KEY"]
 
 
 # Note: LLM's do not always produce the same results. When executing the code in your notebook, you may get slightly different answers that those in the video.
@@ -39,6 +38,7 @@ openai.api_key = os.environ['OPENAI_API_KEY']
 
 # account for deprecation of LLM model
 import datetime
+
 # Get the current date
 current_date = datetime.datetime.now().date()
 
@@ -53,7 +53,7 @@ else:
 
 
 # ## Chat API : OpenAI
-# 
+#
 # Let's start with a direct API calls to OpenAI.
 
 # In[10]:
@@ -64,7 +64,7 @@ def get_completion(prompt, model=llm_model):
     response = openai.ChatCompletion.create(
         model=model,
         messages=messages,
-        temperature=0, 
+        temperature=0,
     )
     return response.choices[0].message["content"]
 
@@ -121,7 +121,7 @@ response
 
 
 # ## Chat API : LangChain
-# 
+#
 # Let's try how we can do the same using LangChain.
 
 # In[ ]:
@@ -204,8 +204,8 @@ right now, matey!
 
 
 customer_messages = prompt_template.format_messages(
-                    style=customer_style,
-                    text=customer_email)
+    style=customer_style, text=customer_email
+)
 
 
 # In[ ]:
@@ -261,8 +261,8 @@ that speaks in English Pirate\
 
 
 service_messages = prompt_template.format_messages(
-    style=service_style_pirate,
-    text=service_reply)
+    style=service_style_pirate, text=service_reply
+)
 
 print(service_messages[0].content)
 
@@ -275,17 +275,13 @@ print(service_response.content)
 
 
 # ## Output Parsers
-# 
+#
 # Let's start with defining how we would like the LLM output to look like:
 
 # In[1]:
 
 
-{
-  "gift": False,
-  "delivery_days": 5,
-  "price_value": "pretty affordable!"
-}
+{"gift": False, "delivery_days": 5, "price_value": "pretty affordable!"}
 
 
 # In[20]:
@@ -347,10 +343,10 @@ type(response.content)
 # In[24]:
 
 
-# You will get an error by running this line of code 
+# You will get an error by running this line of code
 # because'gift' is not a dictionary
 # 'gift' is a string
-response.content.get('gift')
+response.content.get("gift")
 
 
 # ### Parse the LLM output string into a Python dictionary
@@ -365,26 +361,30 @@ from langchain.output_parsers import StructuredOutputParser
 # In[26]:
 
 
-gift_schema = ResponseSchema(name="gift",
-                             description="Was the item purchased\
+gift_schema = ResponseSchema(
+    name="gift",
+    description="Was the item purchased\
                              as a gift for someone else? \
                              Answer True if yes,\
-                             False if not or unknown.")
-delivery_days_schema = ResponseSchema(name="delivery_days",
-                                      description="How many days\
+                             False if not or unknown.",
+)
+delivery_days_schema = ResponseSchema(
+    name="delivery_days",
+    description="How many days\
                                       did it take for the product\
                                       to arrive? If this \
                                       information is not found,\
-                                      output -1.")
-price_value_schema = ResponseSchema(name="price_value",
-                                    description="Extract any\
+                                      output -1.",
+)
+price_value_schema = ResponseSchema(
+    name="price_value",
+    description="Extract any\
                                     sentences about the value or \
                                     price, and output them as a \
-                                    comma separated Python list.")
+                                    comma separated Python list.",
+)
 
-response_schemas = [gift_schema, 
-                    delivery_days_schema,
-                    price_value_schema]
+response_schemas = [gift_schema, delivery_days_schema, price_value_schema]
 
 
 # In[27]:
@@ -427,8 +427,9 @@ text: {text}
 
 prompt = ChatPromptTemplate.from_template(template=review_template_2)
 
-messages = prompt.format_messages(text=customer_review, 
-                                format_instructions=format_instructions)
+messages = prompt.format_messages(
+    text=customer_review, format_instructions=format_instructions
+)
 
 
 # In[31]:
@@ -470,7 +471,7 @@ type(output_dict)
 # In[37]:
 
 
-output_dict.get('delivery_days')
+output_dict.get("delivery_days")
 
 
 # Reminder: Download your notebook to you local computer to save your work.
@@ -478,47 +479,22 @@ output_dict.get('delivery_days')
 # In[ ]:
 
 
-
+# In[ ]:
 
 
 # In[ ]:
 
 
-
+# In[ ]:
 
 
 # In[ ]:
 
 
-
+# In[ ]:
 
 
 # In[ ]:
 
 
-
-
-
 # In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
